@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import {randomUUID} from 'node:crypto'
 
 // const emailValidator = {
 //     validator: (value) => {
@@ -9,6 +10,7 @@ import { Schema, model } from 'mongoose';
 // };
 
 const messageSchema = new Schema({
+    _id: {type: String, default: randomUUID},
     user: {type: String, required: true},
     message: {type: String, required: true},
     timestamp: { type: Date, default: Date.now },
