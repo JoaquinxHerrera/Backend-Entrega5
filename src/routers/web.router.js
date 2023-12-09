@@ -1,10 +1,14 @@
-import Router from 'express'
-import { pm } from '../services/ProductsManager.js'
+import {Router} from 'express'
+import { productsManager, cartsManager } from '../daos/models/mongodb.js'
 
 export const webRouter = Router()
 
 webRouter.get('/', async (req, res) => {
     res.redirect('/products')
+})
+
+webRouter.get('/chat', async (req, res) => {
+    res.render('chat.handlebars', {titulo: 'Chat'})
 })
 
 webRouter.get('/realtimeproducts', (req,res)=>{
@@ -19,3 +23,4 @@ webRouter.get('/', async(req,res) =>{
     const products = await pm.getProducts()
     res.render('home.handlebars', {products})
 })
+

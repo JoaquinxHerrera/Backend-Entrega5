@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { productsManager } from "../daos/mongodb.js";
+import { productsManager } from "../daos/models/mongodb.js";
 
 export const productsRouter = Router()
 
@@ -33,14 +33,9 @@ productsRouter.delete('/:id', async (req, res) => {
 })
 
 productsRouter.put('/:id', async (req, res)=>{
-    const camposAActualizar = {}
-
-    if (req.file){
-        camposAActualizar.tile = req.body.title
-    }
     let actualizado
     try{
-        actualizado = await productsManager.findByIdAndUpdate(req.params.id, {$set: camposAActualizar}, {new: true})
+        actualizado = await productsManager.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})//set es una operacion de mongo para actualizar, el new:true es para que devuelva el elemento actualizado,porque encuentra el elemento y despues lo actualiza, si no estuviera devolveria el elemento no actualizado.
     } catch(error){
         return res.status(400).json({message: error.message})
     }
@@ -49,5 +44,5 @@ productsRouter.put('/:id', async (req, res)=>{
         return res.status(404).json({ message: 'product not found'})
     }
 
-    res.json(borrado)
+    res.json(actualizado)
 })
