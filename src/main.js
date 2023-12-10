@@ -28,10 +28,7 @@ websocketServer.on('connection', async (socket)=>{
 
     socket.on('mensaje', async (mensaje)  =>{
         try {
-            // Guardar el nuevo mensaje en la base de datos
             const newMessage = await messagesManager.create(mensaje);
-
-            // Emitir todos los mensajes a todos los clientes conectados
             await emitirMensajes();
         } catch (error) {
             console.error('Error al guardar el mensaje en la base de datos:', error.message);
