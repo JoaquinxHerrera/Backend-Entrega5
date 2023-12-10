@@ -88,4 +88,5 @@ li{
 
 .currentUser{
     align-self: end;
+    border-radius: 0.5625rem 0rem 0.5625rem 0.5625rem;
 }
