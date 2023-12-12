@@ -4,8 +4,14 @@ import { productsManager } from "../daos/models/mongodb.js";
 export const productsRouter = Router()
 
 productsRouter.get('/', async(req, res) =>{
-    const products = await productsManager.find().lean()
-    res.json(products)
+    try {
+        let limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+
+        const products = await productsManager.find().limit(limit).lean();
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 })
 
 productsRouter.get('/:id', async(req, res) =>{
